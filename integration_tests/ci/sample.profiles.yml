@@ -1,0 +1,22 @@
+
+# HEY! This file is used in the dv-metrics integrations tests with CircleCI.
+# This file is pretty much a copy of the dbt-utils test setup
+# You should __NEVER__ check credentials into version control. Thanks for reading :)
+
+config:
+    send_anonymous_usage_stats: False
+    use_colors: True
+
+integration_tests:
+  target: postgres
+  outputs:
+    postgres:
+      type: postgres
+      host: localhost
+      user: "{{ env_var('CI_DBT_USER') }}"
+      pass: "{{ env_var('CI_DBT_PASS') }}"
+      port: "{{ env_var('CI_DBT_PORT') }}"
+      dbname: "{{ env_var('CI_DBT_DBNAME') }}"
+      schema: dv_metrics_integration_tests_postgres
+      threads: 1
+
