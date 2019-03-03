@@ -11,10 +11,7 @@ shamelessly stolen from dbt-event-logging
     {{ return(column_log_table) }}
 {% endmacro %}
 
-{% macro get_column_log_schema() %}
-    {% set column_log_table = dbt_dv_utils.get_column_log_relation() %}
-    {{ return(column_log_table.include(schema=True, identifier=False)) }}
-{% endmacro %}
+
 
 {#
 for MS SQL, we could:
@@ -45,11 +42,6 @@ for MS SQL, we could:
             from  "{{ schema }}"."{{ relation }}"
 
 {% endmacro %}
-
-{% macro create_column_log_schema() %}
-    create schema if not exists {{ dbt_dv_utils.get_column_log_schema() }}
-{% endmacro %}
-
 
 {% macro create_column_log_table() %}
 

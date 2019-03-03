@@ -11,11 +11,6 @@ shamelessly stolen from dbt-event-logging
     {{ return(invocation_log_table) }}
 {% endmacro %}
 
-{% macro get_invocation_log_schema() %}
-    {% set invocation_log_table = dbt_dv_utils.get_invocation_log_relation() %}
-    {{ return(invocation_log_table.include(schema=True, identifier=False)) }}
-{% endmacro %}
-
 {#
 for MS SQL, we could:
   select sum([rows])
@@ -46,10 +41,9 @@ for MS SQL, we could:
 
 {% endmacro %}
 
-{% macro create_invocation_log_schema() %}
-    create schema if not exists {{ dbt_dv_utils.get_invocation_log_schema() }}
+{% macro drop_invocation_log_table() %}
+  drop table if exists {{ dbt_dv_utils.get_invocation_log_relation() }}
 {% endmacro %}
-
 
 {% macro create_invocation_log_table() %}
 

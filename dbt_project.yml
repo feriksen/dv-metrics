@@ -14,6 +14,15 @@ clean-targets:
     - "target"
     - "dbt_modules"
 
+on-run-start:
+  - "{{ dv_metrics.create_dv_metrics_schema() }}"
+  - "{{ dv_metrics.create_invocation_log_table() }}"
+  - "{{ dv_metrics.create_column_log_table() }}"
+
+on-run-end:
+  - "{{ dv_metrics.drop_invocation_log_table() }}"
+  - "{{ dv_metrics.drop_column_log_table() }}"
+
 models:
   dv_metrics:
       hubs:
