@@ -2,7 +2,7 @@ name: 'dv_metrics'
 version: '0.1.0'
 
 ## this wont work, seems project target will override any package configuration.
-##profile: 'dv_metrics'
+profile: 'dv_metrics'
 
 source-paths: ["models"]
 analysis-paths: ["analysis"]
@@ -20,12 +20,15 @@ on-run-start:
   - "{{ dv_metrics.create_invocation_log_table() }}"
   - "{{ dv_metrics.create_column_log_table() }}"
 
-#on-run-end:
-#  - "{{ dv_metrics.drop_invocation_log_table() }}"
-#  - "{{ dv_metrics.drop_column_log_table() }}"
+on-run-end:
+- "{{ dv_metrics.drop_invocation_log_table() }}"
+- "{{ dv_metrics.drop_column_log_table() }}"
 
 models:
   dv_metrics:
+      schema: metrics
+      base:
+          materialized: ephemeral
       hubs:
           materialized: incremental
       links:

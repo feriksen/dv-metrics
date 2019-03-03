@@ -1,0 +1,17 @@
+select  invocation_id,
+        dbt_version,
+        project_name,
+        project_version,
+        package_name,
+        package_version,
+        event_timestamp,
+        event_timestamp as load_dte,
+        model_schema,
+        model_name,
+        flag_strict_mode,
+        flag_non_destructive,
+        flag_full_refresh,
+        initial_row_count,
+        invocation_row_count,
+        final_row_count
+from    "{{target.schema }}_metrics"."stage_dvm_invocation_log"
