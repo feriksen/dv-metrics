@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/feriksen/dv-metrics/tree/dev-m1.svg?style=svg)](https://circleci.com/gh/feriksen/dv-metrics/tree/dev-m1)
+
 ### dbt metrics vault logging
 
 A more extensive audit/logging framework that includes metrics such as:
