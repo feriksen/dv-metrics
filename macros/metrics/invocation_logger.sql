@@ -18,7 +18,7 @@ for MS SQL, we could:
 #}
 {% macro persist_invocation_log_event(event_name, schema, relation) %}
 
-        insert into {{ dbt_dv_utils.get_invocation_log_relation() }} (
+        insert into {{ dv_metrics.get_invocation_log_relation() }} (
             event_name,
             event_schema,
             event_model,
@@ -42,12 +42,12 @@ for MS SQL, we could:
 {% endmacro %}
 
 {% macro drop_invocation_log_table() %}
-  drop table if exists {{ dbt_dv_utils.get_invocation_log_relation() }}
+  drop table if exists {{ dv_metrics.get_invocation_log_relation() }}
 {% endmacro %}
 
 {% macro create_invocation_log_table() %}
 
-    create table if not exists {{ dbt_dv_utils.get_invocation_log_relation() }}
+    create table if not exists {{ dv_metrics.get_invocation_log_relation() }}
     (
        event_name       varchar(512),
        event_schema     varchar(512),
@@ -57,7 +57,7 @@ for MS SQL, we could:
        initial_row_count int,
        run_row_count  int,
        final_row_count int
-    )
+    ) 
 
 {% endmacro %}
 
@@ -72,5 +72,5 @@ for MS SQL, we could:
         {%- set event_name = event_name~':FULL_REFRESH' -%}
     {% endif %}
 
-    {{ dbt_dv_utils.persist_invocation_log_event(event_name, this.schema, this.name) }}
+    {{ dv_metrics.persist_invocation_log_event(event_name, this.schema, this.name) }}
 {% endmacro %}
