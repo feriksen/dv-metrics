@@ -1,4 +1,3 @@
 {% macro create_dv_metrics_schema() %}
-    create schema if not exists stage;
-    create schema if not exists dvm;
+    create schema if not exists target.schema~'_metrics'
 {% endmacro %}

@@ -4,8 +4,8 @@ shamelessly stolen from dbt-event-logging
 {% macro get_column_log_relation() %}
     {%- set column_log_table =
         api.Relation.create(
-            identifier='dbt_metrics',
-            schema='stage',
+            identifier='stage_dbt_metrics',
+            schema=target.schema~'_metrics',
             type='table'
         ) -%}
     {{ return(column_log_table) }}
@@ -51,14 +51,19 @@ for MS SQL, we could:
 
     create table if not exists {{ dv_metrics.get_column_log_relation() }}
     (
-       event_name       varchar(512),
-       event_schema     varchar(512),
-       event_model      varchar(512),
-       invocation_id    varchar(512),
-       project_version  varchar(512),
-       initial_row_count int,
-       run_row_count  int,
-       final_row_count int
+      invocation_id varchar(36),
+      dbt_version varchar(12),
+      project_name varchar(128),
+      project_version varchar(12),
+      package_name varchar(128),
+      package_version varchar(12),
+      event_timestamp timestamp,
+      model_schema varchar(128),
+      model_name varchar(128),
+      column_name varchar(128),
+      data_type_name varchar(128),
+      empty_row_count int,
+      unique_value_count int
     )
 
 {% endmacro %}
